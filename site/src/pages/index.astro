@@ -1,0 +1,203 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import EpochCard from '../components/EpochCard.astro';
+import WeaponCard from '../components/WeaponCard.astro';
+import { epochs, totalWeapons } from '../data/weapons';
+---
+
+<BaseLayout
+  title="The Periodic Table of Weapons"
+  description="A visual catalog of over 50 historical weapons spanning five epochs of human warfare, from prehistoric fists to modern assault rifles. Available as a 36x24 inch illustrated poster."
+>
+  <!-- Hero -->
+  <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+    <div class="absolute inset-0">
+      <img
+        src="/images/header/modern.jpg"
+        alt="The Periodic Table of Weapons"
+        class="w-full h-full object-cover opacity-30"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-navy-950/60 via-navy-950/40 to-navy-950"></div>
+    </div>
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+      <p class="text-xs font-heading font-bold uppercase tracking-[0.3em] text-accent mb-6 animate-fade-in-up">
+        A Visual History of Human Warfare
+      </p>
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading font-black text-cream leading-tight mb-8 animate-fade-in-up" style="animation-delay: 0.15s;">
+        The Periodic Table<br />of Weapons
+      </h1>
+      <p class="text-lg sm:text-xl text-cream/70 max-w-2xl mx-auto mb-10 animate-fade-in-up" style="animation-delay: 0.3s;">
+        {totalWeapons} instruments of war cataloged across five epochs of human conflict, from the first clenched fist to the modern battlefield.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up" style="animation-delay: 0.45s;">
+        <a
+          href="#epochs"
+          class="inline-block px-8 py-3 bg-accent text-navy-950 font-heading font-bold rounded-lg hover:bg-accent-light transition-colors"
+        >
+          Explore the Epochs
+        </a>
+        <a
+          href="/poster"
+          class="inline-block px-8 py-3 border border-cream/30 text-cream font-heading font-bold rounded-lg hover:border-accent hover:text-accent transition-colors"
+        >
+          Get the Poster
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Poster Preview -->
+  <section class="py-20 bg-navy-900">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <a href="/poster">
+            <img
+              src="/images/poster/web-preview.jpg"
+              alt="The Periodic Table of Weapons poster"
+              class="rounded-lg shadow-2xl border border-navy-700/30 hover:shadow-accent/10 transition-shadow duration-500"
+            />
+          </a>
+        </div>
+        <div>
+          <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cream mb-6">
+            Own the Print
+          </h2>
+          <p class="text-cream/70 leading-relaxed mb-4">
+            Every weapon rendered as detailed illustration, organized into a periodic table format spanning the full arc of human conflict. From the earliest stone tools to modern precision firearms, each entry represents a turning point in how wars were fought and won.
+          </p>
+          <p class="text-cream/70 leading-relaxed mb-6">
+            Printed on premium 14pt glossy cover stock at 36 by 24 inches. Museum-quality reproduction suitable for framing.
+          </p>
+          <a
+            href="/poster"
+            class="inline-block px-6 py-3 bg-accent text-navy-950 font-heading font-bold rounded-lg hover:bg-accent-light transition-colors"
+          >
+            View Poster Details
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Legacy -->
+  <section class="py-20" id="legacy">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h2 class="text-3xl sm:text-4xl font-heading font-bold text-center text-cream mb-12">
+        Our Legacy of Violence
+      </h2>
+      <div class="prose prose-lg text-cream/70 space-y-6">
+        <p>
+          Many millions of years ago a chimpanzee patrolling his territory first clenched a fist around a heavy stone to forever rid himself of a rival. For as long as there have been tools there have been weapons. The first were rocks, spears, and clubs -- the simplest tools for the task.
+        </p>
+        <p>
+          The earliest known throwing sticks and spears appeared 400,000 years ago. Humans formed permanent agricultural settlements after the close of the last ice age, and by the 5th century BC had developed both sophisticated cultures based on writing and regional empires based on conquest with bronze weaponry. Settlements were soon fortified against the peril of this aggression, and new weapons were developed to destroy towns and enslave their inhabitants.
+        </p>
+      </div>
+      <div class="my-10">
+        <img
+          src="/images/oldfight.jpg"
+          alt="Ancient methods of war"
+          class="rounded-lg shadow-xl w-full"
+          loading="lazy"
+        />
+      </div>
+      <div class="prose prose-lg text-cream/70 space-y-6">
+        <p>
+          Bronze gave way to iron, the sword to the pike, the bow to the longbow, and, eventually, peasant militias led by aristocrats gave way to professional armies led by bureaucratic states. The arts of strategy and tactics developed, and elephants and cavalry charges broke and trampled massed infantry. At the dawn of the modern era, gunpowder pierced the knight's armor with musket balls and blew away the walls of free city-states, assimilating both into a ruthless new order, one shaped more than ever by pervasive violence.
+        </p>
+        <p>
+          At the close of the modern era, the greatest empires as well as many of their vassal states all possessed the means to commit all human life on earth to destruction in but a few minutes by unleashing terrific atomic forces entirely unknown mere decades before they came to be routinely exploited.
+        </p>
+      </div>
+      <div class="my-10">
+        <img
+          src="/images/newfight.jpg"
+          alt="Modern methods of war"
+          class="rounded-lg shadow-xl w-full"
+          loading="lazy"
+        />
+      </div>
+      <div class="prose prose-lg text-cream/70 space-y-6">
+        <p>
+          Human life, ever fragile, has been made far more so by the passage of time and the accumulation of knowledge. For the technology that advances human safety and security in tangential ways -- ranged weaponry for hunting, metal tools for farming -- also endangers human lives in fundamental ways. The bow and the spade can be brought deliberately to bear against the same bodies that fists and claws were always more than enough to crush and rend.
+        </p>
+        <p>
+          It may be destined that human genius will always favor the destruction of life over its preservation. And yet, the latest frontiers of knowledge -- nanoscience, biotechnology, and computation -- promise to reshape humanity in fundamental ways never before imaginable. Perhaps they will narrow the gap between the capacities of tools to destroy our lives and communities and the capacity of our lives and communities to endure these threats that have determined the shapes of our cultures since as far back in time as we can look. They may even tip the balance entirely. Only time will tell.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epochs -->
+  <section class="py-20 bg-navy-900" id="epochs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-heading font-bold uppercase tracking-[0.3em] text-accent mb-4">Five Ages of Warfare</p>
+        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cream">
+          The Epochs
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
+        {epochs.map((epoch) => (
+          <EpochCard
+            slug={epoch.slug}
+            name={epoch.name}
+            subtitle={epoch.subtitle}
+            headerImage={epoch.headerImage}
+            weaponCount={epoch.weapons.length}
+          />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- All Weapons Preview -->
+  <section class="py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-heading font-bold uppercase tracking-[0.3em] text-accent mb-4">The Full Arsenal</p>
+        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cream mb-4">
+          {totalWeapons} Weapons. Five Epochs. One Poster.
+        </h2>
+        <p class="text-cream/60 max-w-xl mx-auto">
+          Click any weapon to view its full illustration as a desktop wallpaper.
+        </p>
+      </div>
+      {epochs.map((epoch) => (
+        <div class="mb-16 last:mb-0">
+          <div class="flex items-center gap-4 mb-6">
+            <h3 class="text-xl font-heading font-bold text-accent whitespace-nowrap">{epoch.name}</h3>
+            <div class="h-px flex-1 bg-navy-700/50"></div>
+            <a href={`/epochs/${epoch.slug}`} class="text-sm text-cream/40 hover:text-accent transition-colors whitespace-nowrap">
+              View epoch &rarr;
+            </a>
+          </div>
+          <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8 xl:grid-cols-10 gap-3 stagger-children">
+            {epoch.weapons.map((weapon) => (
+              <WeaponCard id={weapon.id} name={weapon.name} />
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 bg-navy-900">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cream mb-6">
+        Bring History to Your Wall
+      </h2>
+      <p class="text-cream/70 mb-8 text-lg">
+        The Periodic Table of Weapons is available as a premium 36 by 24 inch poster, printed on 14pt glossy cover stock.
+      </p>
+      <a
+        href="/poster"
+        class="inline-block px-8 py-4 bg-accent text-navy-950 font-heading font-bold text-lg rounded-lg hover:bg-accent-light transition-colors"
+      >
+        Get the Poster
+      </a>
+    </div>
+  </section>
+</BaseLayout>

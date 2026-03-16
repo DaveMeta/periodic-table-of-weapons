@@ -1,0 +1,30 @@
+---
+interface Props {
+  id: string;
+  name: string;
+}
+
+const { id, name } = Astro.props;
+---
+
+<a
+  href={`/images/wallpaper/${id}.jpg`}
+  target="_blank"
+  rel="noopener"
+  class="weapon-card group block bg-navy-800 rounded-lg overflow-hidden border border-navy-700/40 hover:border-accent/40"
+>
+  <div class="aspect-square overflow-hidden">
+    <img
+      src={`/images/squares/${id}.jpg`}
+      alt={name}
+      class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="px-3 py-2.5 text-center">
+    <span class="text-sm font-heading font-bold text-cream/90 group-hover:text-accent transition-colors">
+      {name}
+    </span>
+  </div>
+</a>

@@ -1,0 +1,139 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  ogImage?: string;
+  ogType?: string;
+  canonicalUrl?: string;
+}
+
+const { title, description, ogImage = '/images/ptow.jpg', ogType = 'website', canonicalUrl } = Astro.props;
+const siteUrl = 'https://periodictableofweapons.com';
+const fullTitle = title === 'The Periodic Table of Weapons' ? title : `${title} | The Periodic Table of Weapons`;
+const canonical = canonicalUrl || Astro.url.href;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="800" />
+    <meta property="og:site_name" content="The Periodic Table of Weapons" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Roboto:wght@400;700;900&display=swap" rel="stylesheet" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <slot name="header">
+      <header class="fixed top-0 left-0 right-0 z-50 bg-navy-950/90 backdrop-blur-sm border-b border-navy-700/30">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <a href="/" class="font-heading font-bold text-lg text-cream hover:text-accent transition-colors">
+              PTOW
+            </a>
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden text-cream hover:text-accent p-2" aria-label="Toggle menu">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <!-- Desktop nav -->
+            <div class="hidden md:flex items-center gap-6">
+              <a href="/#epochs" class="text-sm text-cream/70 hover:text-accent transition-colors">Epochs</a>
+              <a href="/poster" class="text-sm text-cream/70 hover:text-accent transition-colors">Poster</a>
+              <a href="/about" class="text-sm text-cream/70 hover:text-accent transition-colors">About</a>
+            </div>
+          </div>
+          <!-- Mobile nav -->
+          <div id="mobile-menu" class="hidden md:hidden pb-4">
+            <div class="flex flex-col gap-3">
+              <a href="/#epochs" class="text-sm text-cream/70 hover:text-accent transition-colors">Epochs</a>
+              <a href="/poster" class="text-sm text-cream/70 hover:text-accent transition-colors">Poster</a>
+              <a href="/about" class="text-sm text-cream/70 hover:text-accent transition-colors">About</a>
+            </div>
+          </div>
+        </nav>
+      </header>
+    </slot>
+
+    <main class="flex-1 pt-16">
+      <slot />
+    </main>
+
+    <footer class="bg-navy-900 border-t border-navy-700/30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div>
+            <h4 class="font-heading font-bold text-accent mb-3">The Periodic Table of Weapons</h4>
+            <p class="text-sm text-cream/60 leading-relaxed">
+              A visual catalog of humanity's instruments of war, spanning from prehistory to the present day.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-accent mb-3">Explore</h4>
+            <ul class="space-y-2">
+              <li><a href="/epochs/ancient" class="text-sm text-cream/60 hover:text-accent transition-colors">Ancient Age</a></li>
+              <li><a href="/epochs/bronze-iron" class="text-sm text-cream/60 hover:text-accent transition-colors">Bronze & Iron Ages</a></li>
+              <li><a href="/epochs/middle-ages" class="text-sm text-cream/60 hover:text-accent transition-colors">Middle Ages</a></li>
+              <li><a href="/epochs/early-modern" class="text-sm text-cream/60 hover:text-accent transition-colors">Early Modern Age</a></li>
+              <li><a href="/epochs/modern" class="text-sm text-cream/60 hover:text-accent transition-colors">Modern Age</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-heading font-bold text-accent mb-3">Navigate</h4>
+            <ul class="space-y-2">
+              <li><a href="/poster" class="text-sm text-cream/60 hover:text-accent transition-colors">Buy the Poster</a></li>
+              <li><a href="/about" class="text-sm text-cream/60 hover:text-accent transition-colors">About the Project</a></li>
+              <li><a href="/" class="text-sm text-cream/60 hover:text-accent transition-colors">Home</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="mt-10 pt-8 border-t border-navy-700/30">
+          <p class="text-xs text-cream/40 text-center leading-relaxed">
+            Weapon illustrations feature artwork from the public-domain collection of the
+            <a href="https://www.metmuseum.org" target="_blank" rel="noopener" class="text-cream/60 hover:text-accent transition-colors">Metropolitan Museum of Art</a>.
+            The atomic explosion photograph is a public domain image taken by the US Navy.
+          </p>
+          <p class="text-xs text-cream/30 text-center mt-2">
+            &copy; {new Date().getFullYear()} Verge Studios. All rights reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      if (btn && menu) {
+        btn.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+        });
+      }
+    </script>
+  </body>
+</html>

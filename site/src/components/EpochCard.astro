@@ -1,0 +1,32 @@
+---
+interface Props {
+  slug: string;
+  name: string;
+  subtitle: string;
+  headerImage: string;
+  weaponCount: number;
+}
+
+const { slug, name, subtitle, headerImage, weaponCount } = Astro.props;
+---
+
+<a
+  href={`/epochs/${slug}`}
+  class="group block relative overflow-hidden rounded-xl border border-navy-700/40 hover:border-accent/40 transition-all duration-300"
+>
+  <div class="absolute inset-0">
+    <img
+      src={headerImage}
+      alt={name}
+      class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+      loading="lazy"
+      decoding="async"
+    />
+    <div class="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/70 to-navy-950/20"></div>
+  </div>
+  <div class="relative p-6 min-h-[200px] flex flex-col justify-end">
+    <span class="text-xs font-heading font-bold uppercase tracking-widest text-accent mb-2">{subtitle}</span>
+    <h3 class="text-xl font-heading font-bold text-cream group-hover:text-accent transition-colors mb-1">{name}</h3>
+    <p class="text-sm text-cream/50">{weaponCount} weapons cataloged</p>
+  </div>
+</a>

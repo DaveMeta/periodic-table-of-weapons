@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { totalWeapons } from '../data/weapons';
+
+const productSchema = {
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "The Periodic Table of Weapons Poster",
+  "image": "https://periodictableofweapons.com/images/poster/poster-high-res.jpg",
+  "description": `A 36x24 inch illustrated poster cataloging ${totalWeapons} historical weapons across five epochs of human warfare. Printed on 14pt glossy cover stock.`,
+  "brand": {
+    "@type": "Brand",
+    "name": "Verge Studios"
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceCurrency": "USD",
+    "availability": "https://schema.org/PreOrder",
+    "url": "https://periodictableofweapons.com/poster"
+  }
+};
+---
+
+<BaseLayout
+  title="Buy the Poster"
+  description={`The Periodic Table of Weapons poster: ${totalWeapons} illustrated weapons across five epochs. 36x24 inches on premium glossy stock. Order yours today.`}
+  ogImage="/images/poster/web-preview.jpg"
+  ogType="product"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(productSchema)} />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="py-20 bg-navy-900">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <!-- Poster Images -->
+        <div class="space-y-6">
+          <a href="/images/poster/poster-high-res.jpg" target="_blank" rel="noopener">
+            <img
+              src="/images/poster/web-preview.jpg"
+              alt="The Periodic Table of Weapons poster"
+              class="rounded-lg shadow-2xl border border-navy-700/30 w-full hover:shadow-accent/10 transition-shadow duration-500"
+            />
+          </a>
+          <p class="text-sm text-cream/40 text-center">
+            Click to view high-resolution version
+          </p>
+          <img
+            src="/images/ptow-print.jpg"
+            alt="Printed poster proof"
+            class="rounded-lg shadow-xl border border-navy-700/30 w-full"
+            loading="lazy"
+          />
+        </div>
+
+        <!-- Product Details -->
+        <div class="lg:sticky lg:top-24">
+          <p class="text-xs font-heading font-bold uppercase tracking-[0.3em] text-accent mb-4">
+            Illustrated Poster
+          </p>
+          <h1 class="text-3xl sm:text-4xl font-heading font-black text-cream mb-6">
+            The Periodic Table of Weapons
+          </h1>
+          <p class="text-cream/70 leading-relaxed mb-6">
+            Every major weapon in human history, rendered as detailed illustration and organized into a periodic table format. {totalWeapons} weapons spanning five epochs, from the first clenched fist to the modern assault rifle.
+          </p>
+
+          <div class="bg-navy-800 rounded-lg p-6 border border-navy-700/40 mb-8">
+            <h3 class="font-heading font-bold text-cream mb-4">Specifications</h3>
+            <dl class="space-y-3 text-sm">
+              <div class="flex justify-between">
+                <dt class="text-cream/50">Dimensions</dt>
+                <dd class="text-cream font-bold">36" x 24"</dd>
+              </div>
+              <div class="h-px bg-navy-700/30"></div>
+              <div class="flex justify-between">
+                <dt class="text-cream/50">Paper Stock</dt>
+                <dd class="text-cream font-bold">14pt Glossy (AQ) Cover</dd>
+              </div>
+              <div class="h-px bg-navy-700/30"></div>
+              <div class="flex justify-between">
+                <dt class="text-cream/50">Weapons Cataloged</dt>
+                <dd class="text-cream font-bold">{totalWeapons}</dd>
+              </div>
+              <div class="h-px bg-navy-700/30"></div>
+              <div class="flex justify-between">
+                <dt class="text-cream/50">Epochs Covered</dt>
+                <dd class="text-cream font-bold">5</dd>
+              </div>
+              <div class="h-px bg-navy-700/30"></div>
+              <div class="flex justify-between">
+                <dt class="text-cream/50">Artwork Source</dt>
+                <dd class="text-cream font-bold">Metropolitan Museum of Art</dd>
+              </div>
+            </dl>
+          </div>
+
+          <a
+            href="#notify"
+            class="block w-full px-8 py-4 bg-accent text-navy-950 font-heading font-bold text-lg rounded-lg hover:bg-accent-light transition-colors text-center mb-4"
+          >
+            Coming Soon
+          </a>
+          <p class="text-sm text-cream/40 text-center">
+            Poster sales will be available shortly. Check back soon.
+          </p>
+
+          <div class="mt-8 pt-8 border-t border-navy-700/30">
+            <h3 class="font-heading font-bold text-cream mb-3">Free Digital Download</h3>
+            <p class="text-sm text-cream/60 mb-4">
+              Want to preview the full poster? Download a high-resolution digital version at no cost.
+            </p>
+            <a
+              href="/images/poster/poster-high-res.jpg"
+              target="_blank"
+              rel="noopener"
+              class="inline-block px-6 py-2.5 border border-cream/30 text-cream font-heading font-bold rounded-lg hover:border-accent hover:text-accent transition-colors text-sm"
+            >
+              Download High-Res (~2.75MB)
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What's on the Poster -->
+  <section class="py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="text-3xl font-heading font-bold text-cream mb-6">What is on the Poster</h2>
+      <p class="text-cream/70 leading-relaxed mb-8">
+        The poster organizes {totalWeapons} weapons into five historical epochs, each illustrated with artwork sourced from the Metropolitan Museum of Art's public-domain collection. Weapons range from the humble fist and thrown stone through bronze swords and medieval siege engines to modern automatic firearms.
+      </p>
+      <a
+        href="/#epochs"
+        class="inline-block px-6 py-3 border border-cream/30 text-cream font-heading font-bold rounded-lg hover:border-accent hover:text-accent transition-colors"
+      >
+        Browse All Epochs
+      </a>
+    </div>
+  </section>
+</BaseLayout>
