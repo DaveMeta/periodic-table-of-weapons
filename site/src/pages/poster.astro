@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import EmailSignup from '../components/EmailSignup.astro';
 import { totalWeapons } from '../data/weapons';
 
 const productSchema = {
@@ -119,6 +120,9 @@ const productSchema = {
       </div>
     </div>
   </section>
+
+  <!-- Email Signup -->
+  <EmailSignup />
 
   <!-- What's on the Poster -->
   <section class="py-20">

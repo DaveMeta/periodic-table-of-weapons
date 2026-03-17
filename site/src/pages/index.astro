@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import EpochCard from '../components/EpochCard.astro';
 import WeaponCard from '../components/WeaponCard.astro';
+import EmailSignup from '../components/EmailSignup.astro';
 import { epochs, totalWeapons } from '../data/weapons';
 ---
 
@@ -145,8 +146,11 @@ import { epochs, totalWeapons } from '../data/weapons';
     </div>
   </section>
 
+  <!-- Email Signup -->
+  <EmailSignup />
+
   <!-- CTA -->
-  <section class="py-20 bg-navy-900">
+  <section class="py-20">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cream mb-6">
         Bring History to Your Wall

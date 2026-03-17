@@ -1,15 +1,21 @@
 ---
 import '../styles/global.css';
 
+interface BreadcrumbItem {
+  name: string;
+  url: string;
+}
+
 interface Props {
   title: string;
   description: string;
   ogImage?: string;
   ogType?: string;
   canonicalUrl?: string;
+  breadcrumbs?: BreadcrumbItem[];
 }
 
-const { title, description, ogImage = '/images/ptow.jpg', ogType = 'website', canonicalUrl } = Astro.props;
+const { title, description, ogImage = '/images/ptow.jpg', ogType = 'website', canonicalUrl, breadcrumbs } = Astro.props;
 const siteUrl = 'https://periodictableofweapons.com';
 const fullTitle = title === 'The Periodic Table of Weapons' ? title : `${title} | The Periodic Table of Weapons`;
 const canonical = canonicalUrl || Astro.url.href;
@@ -56,6 +62,29 @@ const canonical = canonicalUrl || Astro.url.href;
       gtag('js', new Date());
       gtag('config', 'G-SMPLH08W8H');
     </script>
+
+    <!-- Organization Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Periodic Table of Weapons",
+      "url": "https://periodictableofweapons.com",
+      "logo": "https://periodictableofweapons.com/images/ptow.jpg"
+    })} />
+
+    <!-- Breadcrumb Schema (conditional) -->
+    {breadcrumbs && breadcrumbs.length > 0 && (
+      <script type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": breadcrumbs.map((crumb, i) => ({
+          "@type": "ListItem",
+          "position": i + 1,
+          "name": crumb.name,
+          "item": crumb.url
+        }))
+      })} />
+    )}
   </head>
   <body class="min-h-screen flex flex-col">
     <slot name="header">

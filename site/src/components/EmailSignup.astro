@@ -1,0 +1,79 @@
+---
+// Email signup form — posts to /api/subscribe (Cloudflare Pages Function → Resend Audience)
+---
+
+<section class="py-20 bg-navy-900" id="notify">
+  <div class="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <p class="text-xs font-heading font-bold uppercase tracking-[0.3em] text-accent mb-4">Stay in the Loop</p>
+    <h2 class="text-3xl sm:text-4xl font-heading font-bold text-cream mb-4">
+      Get Notified When Prints Are Available
+    </h2>
+    <p class="text-cream/60 mb-8">
+      Join the waitlist for limited-edition prints of The Periodic Table of Weapons.
+    </p>
+
+    <form id="signup-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+      <input
+        type="email"
+        name="email"
+        placeholder="you@example.com"
+        required
+        class="flex-1 px-4 py-3 rounded-lg bg-navy-800 border border-navy-700/50 text-cream placeholder:text-cream/30 focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-colors"
+      />
+      <button
+        type="submit"
+        class="px-6 py-3 bg-accent text-navy-950 font-heading font-bold rounded-lg hover:bg-accent-light transition-colors whitespace-nowrap cursor-pointer"
+      >
+        Join Waitlist
+      </button>
+    </form>
+
+    <p id="signup-message" class="mt-4 text-xs text-cream/30">
+      No spam. We only email when prints are back in stock.
+    </p>
+  </div>
+</section>
+
+<script>
+  const form = document.getElementById("signup-form") as HTMLFormElement;
+  const msg = document.getElementById("signup-message") as HTMLParagraphElement;
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const emailInput = form.querySelector<HTMLInputElement>('input[name="email"]')!;
+    const button = form.querySelector<HTMLButtonElement>("button")!;
+    const email = emailInput.value.trim();
+
+    if (!email) return;
+
+    button.disabled = true;
+    button.textContent = "Joining...";
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      if (res.ok) {
+        msg.textContent = "You're on the list! We'll let you know when prints drop.";
+        msg.classList.remove("text-cream/30");
+        msg.classList.add("text-accent");
+        emailInput.value = "";
+      } else {
+        const data = await res.json();
+        msg.textContent = data.error || "Something went wrong. Please try again.";
+        msg.classList.remove("text-cream/30");
+        msg.classList.add("text-red-400");
+      }
+    } catch {
+      msg.textContent = "Network error. Please try again.";
+      msg.classList.remove("text-cream/30");
+      msg.classList.add("text-red-400");
+    } finally {
+      button.disabled = false;
+      button.textContent = "Join Waitlist";
+    }
+  });
+</script>

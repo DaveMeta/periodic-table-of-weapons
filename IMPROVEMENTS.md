@@ -28,7 +28,7 @@
 8. [x] **Modernize the microsite** — Rebuilt as Astro 5 + Tailwind CSS 4 static site. Homepage, 5 epoch pages, poster page, about page. Deployed to Cloudflare Pages.
 9. [ ] **Integrate POD checkout** — Printful/Printify API for direct purchases on the site.
 10. [x] **Add SEO foundation** — Meta descriptions, OG tags, Product schema on poster page, sitemap, robots.txt. All pages have canonical URLs.
-11. [ ] **Set up GA4** — BLOCKER: Need GA4 property created.
+11. [x] **Set up GA4** — GA4 property G-SMPLH08W8H added to BaseLayout.astro and deployed.
 12. [ ] **Set up GSC** — Verify domain, submit sitemap.
 13. [ ] **Add email capture** — MailChimp form is there but may be stale. Verify or switch to Resend.
 14. [x] **Domain setup** — periodictableofweapons.com zone exists in Cloudflare. Custom domain added to Pages project. DNS pending propagation.
@@ -56,3 +56,4 @@
 | 10 | Add SEO foundation (meta, schema, sitemap, robots) | 2026-03-16 | e8183d3 |
 | 14 | Domain setup (periodictableofweapons.com on CF Pages) | 2026-03-16 | e8183d3 |
 | 17 | Run /humanizer on all copy | 2026-03-16 | 69063dc |
+| 11 | Set up GA4 (G-SMPLH08W8H) | 2026-03-16 | cb0b9dd |
