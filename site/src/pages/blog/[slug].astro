@@ -1,0 +1,142 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const siteUrl = 'https://periodictableofweapons.com';
+
+const breadcrumbs = [
+  { name: 'Home', url: `${siteUrl}/` },
+  { name: 'Blog', url: `${siteUrl}/blog/` },
+  { name: post.data.title, url: `${siteUrl}/blog/${post.id}/` },
+];
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": post.data.title,
+  "description": post.data.description,
+  "datePublished": post.data.publishDate.toISOString(),
+  "author": {
+    "@type": "Person",
+    "name": post.data.author,
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Periodic Table of Weapons",
+    "url": siteUrl,
+  },
+  ...(post.data.image ? { "image": `${siteUrl}${post.data.image}` } : {}),
+};
+---
+
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  ogImage={post.data.image}
+  breadcrumbs={breadcrumbs}
+>
+  <Fragment slot="header">
+    <header class="fixed top-0 left-0 right-0 z-50 bg-navy-950/90 backdrop-blur-sm border-b border-navy-700/30">
+      <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="/" class="font-heading font-bold text-lg text-cream hover:text-accent transition-colors">
+            PTOW
+          </a>
+          <button id="mobile-menu-btn" class="md:hidden text-cream hover:text-accent p-2" aria-label="Toggle menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <div class="hidden md:flex items-center gap-6">
+            <a href="/#epochs" class="text-sm text-cream/70 hover:text-accent transition-colors">Epochs</a>
+            <a href="/poster" class="text-sm text-cream/70 hover:text-accent transition-colors">Poster</a>
+            <a href="/blog" class="text-sm text-cream/70 hover:text-accent transition-colors">Blog</a>
+            <a href="/about" class="text-sm text-cream/70 hover:text-accent transition-colors">About</a>
+          </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden pb-4">
+          <div class="flex flex-col gap-3">
+            <a href="/#epochs" class="text-sm text-cream/70 hover:text-accent transition-colors">Epochs</a>
+            <a href="/poster" class="text-sm text-cream/70 hover:text-accent transition-colors">Poster</a>
+            <a href="/blog" class="text-sm text-cream/70 hover:text-accent transition-colors">Blog</a>
+            <a href="/about" class="text-sm text-cream/70 hover:text-accent transition-colors">About</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+  </Fragment>
+
+  <!-- Article Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <article class="py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumbs -->
+      <nav class="mb-8 text-sm font-heading" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-cream/40">
+          <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+          <li class="text-cream/20">/</li>
+          <li><a href="/blog" class="hover:text-accent transition-colors">Blog</a></li>
+          <li class="text-cream/20">/</li>
+          <li class="text-cream/60 truncate max-w-[200px] sm:max-w-none">{post.data.title}</li>
+        </ol>
+      </nav>
+
+      <!-- Header -->
+      <header class="mb-12">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <time datetime={post.data.publishDate.toISOString()} class="text-xs text-cream/40 font-heading">
+            {formatDate(post.data.publishDate)}
+          </time>
+          <span class="text-cream/20">|</span>
+          <span class="text-xs text-cream/40 font-heading">{post.data.author}</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-heading font-bold text-cream mb-4">
+          {post.data.title}
+        </h1>
+        <p class="text-lg text-cream/60 leading-relaxed">
+          {post.data.description}
+        </p>
+        <div class="flex flex-wrap gap-2 mt-4">
+          {post.data.tags.map((tag: string) => (
+            <span class="text-xs px-2 py-1 rounded bg-navy-800 text-accent/70 font-heading">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </header>
+
+      <!-- Content -->
+      <div class="blog-prose">
+        <Content />
+      </div>
+
+      <!-- Back link -->
+      <div class="mt-16 pt-8 border-t border-navy-700/30">
+        <a href="/blog" class="text-sm text-cream/40 hover:text-accent transition-colors font-heading">
+          &larr; Back to all posts
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

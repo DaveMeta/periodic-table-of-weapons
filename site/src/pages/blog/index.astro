@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
+
+const breadcrumbs = [
+  { name: 'Home', url: 'https://periodictableofweapons.com/' },
+  { name: 'Blog', url: 'https://periodictableofweapons.com/blog/' },
+];
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title="Blog"
+  description="Articles on the history of weapons, warfare, and the evolution of human conflict across five epochs."
+  breadcrumbs={breadcrumbs}
+>
+  <section class="py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <p class="text-xs font-heading font-bold uppercase tracking-[0.3em] text-accent mb-4">Dispatches</p>
+        <h1 class="text-3xl sm:text-4xl font-heading font-bold text-cream">
+          The Arsenal Blog
+        </h1>
+        <p class="mt-4 text-cream/60 max-w-xl mx-auto">
+          Deep dives into the weapons, battles, and innovations that shaped the history of human warfare.
+        </p>
+      </div>
+
+      {posts.length === 0 && (
+        <p class="text-center text-cream/50 text-lg">No posts yet. Check back soon.</p>
+      )}
+
+      <div class="space-y-10">
+        {posts.map((post) => (
+          <article class="group border border-navy-700/30 rounded-lg p-6 hover:border-accent/30 transition-colors">
+            <a href={`/blog/${post.id}`} class="block">
+              <div class="flex flex-wrap items-center gap-3 mb-3">
+                <time datetime={post.data.publishDate.toISOString()} class="text-xs text-cream/40 font-heading">
+                  {formatDate(post.data.publishDate)}
+                </time>
+                <span class="text-cream/20">|</span>
+                <span class="text-xs text-cream/40 font-heading">{post.data.author}</span>
+              </div>
+              <h2 class="text-xl font-heading font-bold text-cream group-hover:text-accent transition-colors mb-3">
+                {post.data.title}
+              </h2>
+              <p class="text-cream/60 text-sm leading-relaxed mb-4">
+                {post.data.description}
+              </p>
+              <div class="flex flex-wrap gap-2">
+                {post.data.tags.map((tag: string) => (
+                  <span class="text-xs px-2 py-1 rounded bg-navy-800 text-accent/70 font-heading">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
