@@ -1,0 +1,89 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { weaponCategories } from '../../data/weapon-categories';
+
+const siteUrl = 'https://periodictableofweapons.com';
+
+const breadcrumbs = [
+  { name: 'Home', url: `${siteUrl}/` },
+  { name: 'Weapon Types', url: `${siteUrl}/types/` },
+];
+---
+
+<BaseLayout
+  title="Weapon Types: A Guide to Every Category of Historical Weapon"
+  description="Browse weapons by type: swords, polearms, ranged weapons, bludgeons, firearms, rifles, shotguns, siege weapons, and axes. 54 weapons across 9 categories, spanning from prehistory to the modern age."
+  breadcrumbs={breadcrumbs}
+>
+  <section class="py-12 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Breadcrumbs -->
+      <nav class="mb-8 text-sm font-heading" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-cream/40">
+          <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+          <li class="text-cream/20">/</li>
+          <li class="text-cream/60">Weapon Types</li>
+        </ol>
+      </nav>
+
+      <div class="max-w-3xl mb-16">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-heading font-black text-cream mb-6 leading-tight">
+          Weapon Types
+        </h1>
+        <p class="text-lg text-cream/60 leading-relaxed">
+          Fifty-four weapons spanning five epochs of human conflict, organized by what they are and how they kill. Swords cut. Polearms thrust. Bludgeons crush. Bows and crossbows shoot. Firearms explode. The categories overlap at the edges, but the core distinctions have held for thousands of years.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {weaponCategories.map((cat) => (
+          <a
+            href={`/types/${cat.slug}`}
+            class="group block bg-navy-800/50 rounded-xl border border-navy-700/30 hover:border-accent/40 transition-all overflow-hidden"
+          >
+            <!-- Preview thumbnails -->
+            <div class="grid grid-cols-4 gap-px bg-navy-700/20">
+              {cat.weaponIds.slice(0, 4).map((id) => (
+                <div class="aspect-square overflow-hidden">
+                  <img
+                    src={`/images/squares/${id}.jpg`}
+                    alt=""
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              ))}
+            </div>
+            <div class="p-5">
+              <div class="flex items-center justify-between mb-2">
+                <h2 class="text-lg font-heading font-bold text-cream group-hover:text-accent transition-colors">
+                  {cat.name}
+                </h2>
+                <span class="text-xs font-heading text-cream/40">{cat.weaponIds.length} weapons</span>
+              </div>
+              <p class="text-sm text-cream/50 leading-relaxed">
+                {cat.description}
+              </p>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Poster CTA -->
+  <section class="py-16 bg-navy-900">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-cream/60 mb-2 text-sm font-heading uppercase tracking-wider">54 Weapons. Five Epochs. One Poster.</p>
+      <p class="text-cream/40 mb-6">Every weapon type is represented on the poster.</p>
+      <a
+        href="/poster"
+        class="inline-block px-8 py-3 bg-accent text-navy-950 font-heading font-bold rounded-lg hover:bg-accent-light transition-colors"
+      >
+        Get the Poster
+      </a>
+    </div>
+  </section>
+</BaseLayout>
