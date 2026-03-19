@@ -1,0 +1,274 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import WeaponCard from '../../components/WeaponCard.astro';
+import { epochs } from '../../data/weapons';
+import { weaponDetails } from '../../data/weapon-details';
+import type { GetStaticPaths } from 'astro';
+
+export const getStaticPaths: GetStaticPaths = () => {
+  const paths: any[] = [];
+  for (const epoch of epochs) {
+    for (const weapon of epoch.weapons) {
+      if (weaponDetails[weapon.id]) {
+        paths.push({
+          params: { id: weapon.id },
+          props: { weapon, epoch },
+        });
+      }
+    }
+  }
+  return paths;
+};
+
+const { weapon, epoch } = Astro.props;
+const detail = weaponDetails[weapon.id];
+
+// Find prev/next weapons within the epoch
+const weaponIndex = epoch.weapons.findIndex((w: any) => w.id === weapon.id);
+const prevWeapon = weaponIndex > 0 ? epoch.weapons[weaponIndex - 1] : null;
+const nextWeapon = weaponIndex < epoch.weapons.length - 1 ? epoch.weapons[weaponIndex + 1] : null;
+
+// Related weapons: other weapons from the same epoch (exclude current)
+const relatedWeapons = epoch.weapons.filter((w: any) => w.id !== weapon.id);
+
+const siteUrl = 'https://periodictableofweapons.com';
+
+const breadcrumbs = [
+  { name: 'Home', url: `${siteUrl}/` },
+  { name: epoch.name, url: `${siteUrl}/epochs/${epoch.slug}/` },
+  { name: weapon.name, url: `${siteUrl}/weapons/${weapon.id}/` },
+];
+
+const articleSchema = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": weapon.name,
+  "description": detail.description.slice(0, 160),
+  "image": `${siteUrl}/images/wallpaper/${weapon.id}.jpg`,
+  "author": {
+    "@type": "Organization",
+    "name": "Periodic Table of Weapons",
+    "url": siteUrl,
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Periodic Table of Weapons",
+    "url": siteUrl,
+    "logo": {
+      "@type": "ImageObject",
+      "url": `${siteUrl}/images/ptow.jpg`,
+    },
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": `${siteUrl}/weapons/${weapon.id}/`,
+  },
+};
+
+const facts = [
+  { label: "Type", value: detail.type },
+  { label: "Origin", value: detail.origin },
+  { label: "Era", value: detail.era },
+  { label: "Notable Users", value: detail.notableUsers },
+  { label: "Epoch", value: epoch.name },
+];
+---
+
+<BaseLayout
+  title={`${weapon.name} — History, Origin & Significance`}
+  description={detail.description.slice(0, 155) + '...'}
+  ogImage={`/images/wallpaper/${weapon.id}.jpg`}
+  ogType="article"
+  breadcrumbs={breadcrumbs}
+>
+  <!-- Article Schema -->
+  <script type="application/ld+json" set:html={JSON.stringify(articleSchema)} />
+
+  <!-- Hero: Weapon Exhibit -->
+  <section class="py-12 md:py-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Breadcrumbs -->
+      <nav class="mb-8 text-sm font-heading" aria-label="Breadcrumb">
+        <ol class="flex items-center gap-2 text-cream/40">
+          <li><a href="/" class="hover:text-accent transition-colors">Home</a></li>
+          <li class="text-cream/20">/</li>
+          <li><a href={`/epochs/${epoch.slug}`} class="hover:text-accent transition-colors">{epoch.name}</a></li>
+          <li class="text-cream/20">/</li>
+          <li class="text-cream/60">{weapon.name}</li>
+        </ol>
+      </nav>
+
+      <!-- Two-column exhibit layout -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+
+        <!-- Left: Weapon illustration -->
+        <div class="animate-fade-in-up">
+          <div class="relative group">
+            <!-- Outer frame -->
+            <div class="absolute -inset-px rounded-xl bg-gradient-to-br from-navy-600/40 via-accent/10 to-navy-600/40"></div>
+            <div class="relative bg-navy-900 rounded-xl overflow-hidden border border-navy-700/30">
+              <!-- Image -->
+              <div class="aspect-square overflow-hidden">
+                <img
+                  src={`/images/wallpaper/${weapon.id}.jpg`}
+                  alt={`${weapon.name} — historical illustration from The Periodic Table of Weapons`}
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="eager"
+                  decoding="async"
+                />
+              </div>
+              <!-- Exhibit label strip -->
+              <div class="px-5 py-3 bg-navy-950/80 border-t border-navy-700/30 flex items-center justify-between">
+                <span class="text-xs font-heading uppercase tracking-[0.2em] text-cream/40">Illustration</span>
+                <a
+                  href={`/images/wallpaper/${weapon.id}.jpg`}
+                  target="_blank"
+                  rel="noopener"
+                  class="text-xs font-heading text-accent/60 hover:text-accent transition-colors"
+                >
+                  View Full Size &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Weapon details -->
+        <div class="animate-fade-in-up" style="animation-delay: 0.15s;">
+
+          <!-- Epoch badge -->
+          <a
+            href={`/epochs/${epoch.slug}`}
+            class="inline-flex items-center gap-2 text-xs font-heading font-bold uppercase tracking-[0.25em] text-accent/80 hover:text-accent transition-colors mb-4"
+          >
+            <span class="w-2 h-2 rounded-full bg-accent/60"></span>
+            {epoch.name} &middot; {epoch.period}
+          </a>
+
+          <!-- Weapon name -->
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-heading font-black text-cream mb-6 leading-tight">
+            {weapon.name}
+          </h1>
+
+          <!-- Quick facts table -->
+          <div class="mb-8 border border-navy-700/30 rounded-lg overflow-hidden">
+            <div class="px-5 py-3 bg-navy-800/50 border-b border-navy-700/30">
+              <h2 class="text-xs font-heading font-bold uppercase tracking-[0.2em] text-accent/70">Specifications</h2>
+            </div>
+            <dl class="divide-y divide-navy-700/20">
+              {facts.map((fact) => (
+                <div class="px-5 py-3 flex items-start gap-4">
+                  <dt class="text-xs font-heading font-bold uppercase tracking-wider text-accent/60 w-28 shrink-0 pt-0.5">
+                    {fact.label}
+                  </dt>
+                  <dd class="text-sm text-cream/80 leading-relaxed">
+                    {fact.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <!-- Description -->
+          <div class="mb-8">
+            <h2 class="text-lg font-heading font-bold text-cream mb-4">History</h2>
+            <p class="text-cream/70 leading-relaxed mb-4">
+              {detail.description}
+            </p>
+          </div>
+
+          <!-- Significance -->
+          <div class="mb-8 pl-5 border-l-2 border-accent/30">
+            <h2 class="text-xs font-heading font-bold uppercase tracking-[0.2em] text-accent/70 mb-3">Significance</h2>
+            <p class="text-cream/60 leading-relaxed italic">
+              {detail.significance}
+            </p>
+          </div>
+
+          <!-- CTA -->
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="/poster"
+              class="inline-flex items-center gap-2 px-6 py-3 bg-accent text-navy-950 font-heading font-bold text-sm rounded-lg hover:bg-accent-light transition-colors"
+            >
+              See It on the Poster
+            </a>
+            <a
+              href={`/epochs/${epoch.slug}`}
+              class="inline-flex items-center gap-2 px-6 py-3 bg-navy-800 text-cream/80 font-heading font-bold text-sm rounded-lg hover:bg-navy-700 hover:text-cream transition-colors border border-navy-700/40"
+            >
+              Explore {epoch.name}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Prev/Next Navigation -->
+  <section class="py-10 bg-navy-900/50 border-y border-navy-700/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between">
+        {prevWeapon && weaponDetails[prevWeapon.id] ? (
+          <a
+            href={`/weapons/${prevWeapon.id}`}
+            class="group flex items-center gap-3 text-cream/60 hover:text-accent transition-colors"
+          >
+            <span class="text-2xl">&larr;</span>
+            <div>
+              <span class="text-xs font-heading uppercase tracking-wider text-cream/40">Previous</span>
+              <span class="block font-heading font-bold">{prevWeapon.name}</span>
+            </div>
+          </a>
+        ) : <div></div>}
+        {nextWeapon && weaponDetails[nextWeapon.id] ? (
+          <a
+            href={`/weapons/${nextWeapon.id}`}
+            class="group flex items-center gap-3 text-cream/60 hover:text-accent transition-colors text-right"
+          >
+            <div>
+              <span class="text-xs font-heading uppercase tracking-wider text-cream/40">Next</span>
+              <span class="block font-heading font-bold">{nextWeapon.name}</span>
+            </div>
+            <span class="text-2xl">&rarr;</span>
+          </a>
+        ) : <div></div>}
+      </div>
+    </div>
+  </section>
+
+  <!-- More from this epoch -->
+  {relatedWeapons.length > 0 && (
+    <section class="py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center gap-4 mb-8">
+          <h2 class="text-2xl font-heading font-bold text-cream whitespace-nowrap">
+            More from the {epoch.name}
+          </h2>
+          <div class="h-px flex-1 bg-navy-700/50"></div>
+          <span class="text-sm text-cream/40">{relatedWeapons.length} weapons</span>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 stagger-children">
+          {relatedWeapons.map((w: any) => (
+            <WeaponCard id={w.id} name={w.name} />
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Poster CTA -->
+  <section class="py-16 bg-navy-900">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-cream/60 mb-2 text-sm font-heading uppercase tracking-wider">54 Weapons. Five Epochs. One Poster.</p>
+      <p class="text-cream/40 mb-6">The {weapon.name} is one of {epoch.weapons.length} weapons from the {epoch.name} featured on the poster.</p>
+      <a
+        href="/poster"
+        class="inline-block px-8 py-3 bg-accent text-navy-950 font-heading font-bold rounded-lg hover:bg-accent-light transition-colors"
+      >
+        Get the Poster
+      </a>
+    </div>
+  </section>
+</BaseLayout>

@@ -6,13 +6,12 @@ A static microsite showcasing "The Periodic Table of Weapons" — an illustrated
 ## Tech Stack
 | Layer | Technology |
 |-------|-----------|
-| Markup | Static HTML (no build system, no framework) |
-| Styling | SCSS (ptow.scss) compiled to ptow.min.css |
-| JavaScript | jQuery 3.2.1 Slim, ScrollReveal.js, Modernizr 2.8.3, Sharer.js (CDN) |
+| Framework | Astro 5 (static site generator) |
+| Styling | Tailwind CSS 4 |
 | Fonts | Google Fonts — PT Serif, Roboto |
-| Icons | Font Awesome 4.x (CDN) |
-| Email | MailChimp embedded signup form |
-| Hosting | Currently at vergegraphics.com/periodic-table-of-weapons/ |
+| Email | Resend API (audience: a9ec2ace-7422-450a-88cd-83409353388f) |
+| Analytics | GA4 (G-SMPLH08W8H, property 528611666) |
+| Hosting | Cloudflare Pages (periodictableofweapons.com) |
 
 ## Commands
 | Command | What It Does |
@@ -77,16 +76,16 @@ periodic-table-of-weapons/
 - **Audience**: History enthusiasts, military history buffs, weapons collectors, infographic/poster fans, educators
 
 ### Analytics Mapping
-- **GA4 Property ID**: TBD
-- **Search Console Property**: TBD
+- **GA4 Property ID**: 528611666 (G-SMPLH08W8H)
+- **Search Console Property**: sc-domain:periodictableofweapons.com (verified 2026-03-18)
 - **Cloudflare Zone ID**: TBD
 
 ### Performance Baseline
-- **Monthly traffic**: TBD
-- **Top pages**: TBD
-- **Top keywords**: TBD
-- **Current revenue**: TBD
-- **Last updated**: never
+- **Monthly traffic**: ~11 sessions (all Direct, zero organic)
+- **Top pages**: / (homepage only — no other pages receiving traffic)
+- **Top keywords**: None ranking yet (zero GSC impressions)
+- **Current revenue**: $0
+- **Last updated**: 2026-03-18
 
 ### Voice & Tone
 - Authoritative and educational — the site reads like a museum exhibit

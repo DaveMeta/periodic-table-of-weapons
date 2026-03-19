@@ -1,16 +1,22 @@
 ---
+import { weaponDetails } from '../data/weapon-details';
+
 interface Props {
   id: string;
   name: string;
 }
 
 const { id, name } = Astro.props;
+const hasPage = !!weaponDetails[id];
+const href = hasPage ? `/weapons/${id}` : `/images/wallpaper/${id}.jpg`;
+const target = hasPage ? undefined : '_blank';
+const rel = hasPage ? undefined : 'noopener';
 ---
 
 <a
-  href={`/images/wallpaper/${id}.jpg`}
-  target="_blank"
-  rel="noopener"
+  href={href}
+  target={target}
+  rel={rel}
   class="weapon-card group block bg-navy-800 rounded-lg overflow-hidden border border-navy-700/40 hover:border-accent/40"
 >
   <div class="aspect-square overflow-hidden">
