@@ -7,7 +7,7 @@ const productSchema = {
   "@context": "https://schema.org",
   "@type": "Product",
   "name": "The Periodic Table of Weapons Poster",
-  "image": "https://periodictableofweapons.com/images/poster/poster-high-res.jpg",
+  "image": "https://periodictableofweapons.com/images/poster/poster.jpg",
   "description": `A 36x24 inch illustrated poster cataloging ${totalWeapons} historical weapons across five epochs of human warfare. Printed on 14pt glossy cover stock.`,
   "brand": {
     "@type": "Brand",
@@ -16,14 +16,14 @@ const productSchema = {
   "offers": {
     "@type": "Offer",
     "priceCurrency": "USD",
-    "availability": "https://schema.org/PreOrder",
+    "availability": "https://schema.org/OutOfStock",
     "url": "https://periodictableofweapons.com/poster"
   }
 };
 ---
 
 <BaseLayout
-  title="Buy the Poster"
+  title="The Poster"
   description={`The Periodic Table of Weapons poster: ${totalWeapons} illustrated weapons across five epochs. 36x24 inches on premium glossy stock. Order yours today.`}
   ogImage="/images/poster/poster.jpg"
   ogType="product"
@@ -38,16 +38,11 @@ const productSchema = {
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <!-- Poster Images -->
         <div class="space-y-6">
-          <a href="/images/poster/poster-high-res.jpg" target="_blank" rel="noopener">
-            <img
-              src="/images/poster/poster.jpg"
-              alt="The Periodic Table of Weapons poster"
-              class="rounded-lg shadow-2xl border border-navy-700/30 w-full hover:shadow-accent/10 transition-shadow duration-500"
-            />
-          </a>
-          <p class="text-sm text-cream/40 text-center">
-            Click to view high-resolution version
-          </p>
+          <img
+            src="/images/poster/poster.jpg"
+            alt="The Periodic Table of Weapons poster"
+            class="rounded-lg shadow-2xl border border-navy-700/30 w-full"
+          />
         </div>
 
         <!-- Product Details -->
@@ -92,30 +87,18 @@ const productSchema = {
             </dl>
           </div>
 
-          <a
-            href="#notify"
-            class="block w-full px-8 py-4 bg-accent text-navy-950 font-heading font-bold text-lg rounded-lg hover:bg-accent-light transition-colors text-center mb-4"
-          >
-            Coming Soon
-          </a>
-          <p class="text-sm text-cream/40 text-center">
-            Poster sales will be available shortly. Check back soon.
-          </p>
-
-          <div class="mt-8 pt-8 border-t border-navy-700/30">
-            <h3 class="font-heading font-bold text-cream mb-3">Free Digital Download</h3>
-            <p class="text-sm text-cream/60 mb-4">
-              The full poster is available as a free high-resolution download.
+          <div class="bg-navy-800/60 rounded-lg p-6 border border-navy-700/40 mb-4">
+            <p class="font-heading font-bold text-cream mb-2">Currently Reprinting</p>
+            <p class="text-sm text-cream/60 leading-relaxed">
+              The poster is currently being reprinted and will be available again soon. For inquiries about pricing, bulk orders, or availability, get in touch.
             </p>
-            <a
-              href="/images/poster/poster-high-res.jpg"
-              target="_blank"
-              rel="noopener"
-              class="inline-block px-6 py-2.5 border border-cream/30 text-cream font-heading font-bold rounded-lg hover:border-accent hover:text-accent transition-colors text-sm"
-            >
-              Download High-Res (~2.75MB)
-            </a>
           </div>
+          <a
+            href="mailto:hello@periodictableofweapons.com"
+            class="block w-full px-8 py-4 bg-accent text-navy-950 font-heading font-bold text-lg rounded-lg hover:bg-accent-light transition-colors text-center"
+          >
+            Email Us for More Information
+          </a>
         </div>
       </div>
     </div>
